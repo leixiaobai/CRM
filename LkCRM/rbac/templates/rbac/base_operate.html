@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block css %}
+    <style>
+        .icon-area ul{
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .icon-area ul li{
+            float: left;
+            padding: 10px;
+            padding-left: 0;
+            width: 80px;
+    }
+
+        .icon-area ul li i{
+            font-size: 18px;
+            margin-left: 5px;
+            color: #6d6565;
+    }
+    .form-horizontal .form-group{
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    </style>
+
+{% endblock %}
+{% block content %}
+    <div class="col-sm-offset-1">
+    {% block operate_title %}
+
+    {% endblock %}
+    </div>
+    <form action="" class="form-horizontal" method="post" novalidate style="margin-top: 50px">
+        {% csrf_token %}
+        {% for field in form_obj %}
+            <div class="form-group {% if field.errors %}has-error{% endif %}">
+                <label class="control-label col-sm-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <div class="col-sm-6 icon-area">
+                    {{ field }}
+                </div>
+                <span class="help-block">{{ field.errors.0 }}</span>
+            </div>
+        {% endfor %}
+            <div class="form-group">
+                <div class="col-sm-6 col-sm-offset-2">
+                    <button type="submit" class="btn btn-success">提交</button>
+                    <a href="{% url 'rbac:menu_list' %}" class="btn btn-danger">取消</a>
+                </div>
+            </div>
+    </form>
+
+{% endblock %}
+
+{% block js %}
+    <script src="/rbac/static/js/menu.js"></script>
+{% endblock %}

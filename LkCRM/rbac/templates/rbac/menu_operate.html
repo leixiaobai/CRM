@@ -1,0 +1,10 @@
+{% extends 'rbac/base_operate.html' %}
+
+{% block operate_title %}
+    {% if menu_obj %}
+        <h2>编辑菜单</h2>
+        {% else %}
+        <h2>添加菜单</h2>
+    {% endif %}
+{% endblock %}
+

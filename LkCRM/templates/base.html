@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}CRM系统{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+
+     <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="all">
+</head>
+
+
+<body>
+{% block body-content %}
+<
+{% endblock %}
+</body>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/js/jquery.cookie.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/js/index.js"></script>
+</html>

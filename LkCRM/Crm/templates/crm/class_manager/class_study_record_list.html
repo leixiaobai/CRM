@@ -1,0 +1,99 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-offset-6 col-xs-6">
+                    <form action="" style="margin-bottom: 10px" class="clearfix">
+                        <div class="box-tools pull-right" style="display: inline-block;margin-left: 5px">
+                            <div class="input-group input-group-sm" style="width: 300px;">
+                                <input type="text" name="table_search" class="form-control"
+                                       value="{{ search_content|default:'' }}"
+                                       placeholder="请输入内容">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <select name="field_select" id="field_select" class="input-sm pull-right">
+                            <option value="class_obj" selected>班级</option>
+                        </select>
+                    </form>
+               </div>
+                <div class="col-xs-12">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div style="position: absolute; top: -41px;">
+                            <select name="select_action" id="select_action" class="input-sm">
+                                <option value="">请选择批量操作</option>
+                                <option value="init_student_study_record">生成学生学习记录</option>
+                            </select>
+                            <button class="btn btn-success btn-sm">确认执行</button>
+                        </div>
+                        <div class="box">
+
+                        <div class="box-header">
+                            {% load my_tag %}
+                            {% if 'class_study_record_add'|url_is_permission:request %}
+                                <a href="{% url 'class_study_record_add' %}" class="btn btn-primary">添加班级学习记录</a>
+                            {% endif %}
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="all_customers" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox"></th>
+                                    <th>序号</th>
+                                    <th>班级</th>
+                                    <th>节次</th>
+                                    <th>讲师</th>
+                                    <th>录入成绩</th>
+                                    {% if 'class_study_record_edit'|url_is_permission:request or 'class_study_record_delete'|url_is_permission:request %}
+                                         <th>操作</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for class_study_record in class_study_record_list %}
+                                    <tr>
+                                        <td><input type="checkbox" name="selected_pk_list" value="{{ class_study_record.pk }}"></td>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ class_study_record.class_obj }}</td>
+                                        <td>{{ class_study_record.day_num }}</td>
+                                        <td>{{ class_study_record.teacher }}</td>
+                                        <td><a href="{% url 'record_score' class_study_record.pk %}">录入成绩</a></td>
+                                        {% if 'class_study_record_edit'|url_is_permission:request or 'class_study_record_delete'|url_is_permission:request %}
+                                        <td>
+                                            {% if 'class_study_record_edit'|url_is_permission:request %}
+                                                <a href="{% url 'class_study_record_edit' class_study_record.pk %}" class="btn btn-success btn-xs">编辑</a>
+                                            {% endif %}
+                                            {% if 'class_study_record_delete'|url_is_permission:request %}
+                                                <a href="{% url 'class_study_record_delete' class_study_record.pk %}" class="btn btn-danger btn-xs">删除</a>
+                                            {% endif %}
+                                        </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <nav aria-label="Page navigation" class="pull-right">
+                                <ul class="pagination">
+                                    {{ pagination.page_main|safe }}
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+
+{% endblock %}

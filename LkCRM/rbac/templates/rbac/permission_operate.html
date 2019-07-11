@@ -1,0 +1,9 @@
+{% extends 'rbac/base_operate.html' %}
+
+{% block operate_title %}
+    {% if permission_obj %}
+        <h2>编辑权限</h2>
+        {% else %}
+        <h2>添加权限</h2>
+    {% endif %}
+{% endblock %}

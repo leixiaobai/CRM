@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% block content-header %}
+    <h3 style="margin-left: 10px">录入{{ class_study_record_list }}成绩</h3>
+{% endblock %}
+
+{% block content %}
+
+    <div class="box-body">
+    <a href="{% url 'class_study_record_list' %}" class="btn btn-danger pull-right">返回</a>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <input type="submit" value="保存" class="btn btn-success pull-right" style="margin-right: 20px;margin-bottom: 20px;">
+            <table id="" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>姓名</th>
+                    <th>考勤</th>
+                    <th>成绩</th>
+                    <th>批语</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for form in formset %}
+                    <tr>
+                        {{ form.id }}
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ form.instance.student }}</td>
+                        <td>{{ form.instance.get_record_display }}</td>
+                        <td>{{ form.score }}</td>
+                        <td>{{ form.homework_note }}{{ form.errors.0 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+{% endblock %}

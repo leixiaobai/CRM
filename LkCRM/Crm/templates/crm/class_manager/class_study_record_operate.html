@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <form action="" method="post" novalidate>
+                        {% csrf_token %}
+                        {% for class_study_record in class_study_record_list %}
+                            <div class="form-group">
+                                <label for="{{ class_study_record.id_for_label }}">{{ class_study_record.label }}</label>
+                                {{ class_study_record }}
+                                <span class="error-text">{{ class_study_record.errors.0 }}</span>
+                            </div>
+                        {% endfor %}
+                        <a href="{% url 'class_study_record_list' %}" class="btn btn-danger  pull-right" style="margin-left: 20px">取消</a>
+                        <input type="submit" class="btn btn-success pull-right" value="提交">
+                    </form>
+                </div>
+
+            </div>
+            <!-- /.row -->
+        </section>
+
+{% endblock %}

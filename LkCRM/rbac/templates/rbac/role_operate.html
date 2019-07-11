@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="col-sm-offset-1">
+    {% if role_obj %}
+        <h2>编辑角色</h2>
+        {% else %}
+        <h2>添加角色</h2>
+    {% endif %}
+    </div>
+    <form action="" class="form-horizontal" method="post" novalidate style="margin-top: 50px">
+        {% csrf_token %}
+        {% for field in role_form %}
+            <div class="form-group {% if field.errors %}has-error{% endif %}">
+                <label class="control-label col-sm-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <div class="col-sm-6">
+                    {{ field }}
+                </div>
+                <span class="help-block">{{ field.errors.0 }}</span>
+            </div>
+        {% endfor %}
+            <div class="form-group">
+                <div class="col-sm-6 col-sm-offset-2">
+                    <button type="submit" class="btn btn-success">提交</button>
+                    <a href="{% url 'rbac:role_list' %}" class="btn btn-danger">取消</a>
+                </div>
+            </div>
+    </form>
+{% endblock %}

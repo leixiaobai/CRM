@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-offset-6 col-xs-6">
+                    <form action="" style="margin-bottom: 10px" class="clearfix">
+                        <div class="box-tools pull-right" style="display: inline-block;margin-left: 5px">
+                            <div class="input-group input-group-sm" style="width: 300px;">
+                                <input type="text" name="table_search" class="form-control"
+                                       value="{{ search_content|default:'' }}"
+                                       placeholder="请输入内容">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <select name="field_select" id="field_select" class="input-sm pull-right">
+                            <option value="customer" selected>客户</option>
+                            <option value="note">跟进内容</option>
+                            <option value="status">跟进状态</option>
+                            <option value="consultant">跟进人</option>
+                            <option value="date">跟进日期</option>
+                        </select>
+                    </form>
+               </div>
+                <div class="col-xs-12">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div style="position: absolute; top: -41px;">
+                            <select name="select_action" id="select_action" class="input-sm">
+                                <option value="">请选择批量操作</option>
+                                <option value="delete_selected">删除选中的数据</option>
+                            </select>
+                            <button class="btn btn-success btn-sm">确认执行</button>
+                        </div>
+                        <div class="box">
+
+                        <div class="box-header">
+                            {% load my_tag %}
+                            {% if 'consult_record_add'|url_is_permission:request %}
+                                <a href="{% url 'consult_record_add' %}" class="btn btn-primary">添加跟进记录</a>
+                            {% endif %}
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="all_customers" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox"></th>
+                                    <th>序号</th>
+                                    <th>客户</th>
+                                    <th>跟进内容</th>
+                                    <th>跟进状态</th>
+                                    <th>跟进人</th>
+                                    <th>跟进日期</th>
+                                    {% if 'consult_record_edit'|url_is_permission:request or 'consult_record_delete'|url_is_permission:request %}
+                                         <th>操作</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for consult_record in consult_record_list %}
+                                    <tr>
+                                        <td><input type="checkbox" name="selected_pk_list" value="{{ consult_record.pk }}"></td>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ consult_record.customer }}</td>
+                                        <td>{{ consult_record.note }}</td>
+                                        <td>{{ consult_record.get_status_display }}</td>
+                                        <td>{{ consult_record.consultant }}</td>
+                                        <td>{{ consult_record.date|date:'Y-m-d H:i:s' }}</td>
+                                        {% if 'consult_record_edit'|url_is_permission:request or 'consult_record_delete'|url_is_permission:request %}
+                                        <td>
+                                            {% if 'consult_record_edit'|url_is_permission:request %}
+                                                <a href="{% url 'consult_record_edit' consult_record.pk %}" class="btn btn-success btn-xs">编辑</a>
+                                            {% endif %}
+                                            {% if 'consult_record_delete'|url_is_permission:request %}
+                                                <a href="{% url 'consult_record_delete' consult_record.pk %}" class="btn btn-danger btn-xs">删除</a>
+                                            {% endif %}
+                                        </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <nav aria-label="Page navigation" class="pull-right">
+                                <ul class="pagination">
+                                    {{ pagination.page_main|safe }}
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+
+{% endblock %}

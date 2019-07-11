@@ -1,0 +1,27 @@
+rbac应用于其他项目流程
+1.拷贝rbac到新项目
+2.在settings中注册rabc app
+3.数据库迁移
+    首先先删除原有migrations下的文件,再执行数据库迁移命令
+    python manage.py makemigrations
+    python manage.py migrate
+4.在根目录下的urls.py中添加rbac相关的url
+    re_path(r'^rbac/', include('rbac.urls', namespace='rbac'))
+5.layout.html的创建和编写,因为rbac中的模板都继承了这个
+6.录入权限信息
+    角色管理
+    权限管理
+7.分配权限
+    先用户关联,原系统用户表一对一关联rbac用户表
+    from rbac.models import User
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    给用户分角色和权限
+8.登录应用权限
+    登录成功后获取rbac的user_obj,然后初始化用户信息
+
+    应用权限校验中间件
+9.注意模板layout内容和名称
+
+10.应用面包屑导航栏,中间会遇到很多样式js等不同,慢慢调试吧
+
+11.权限控制到按钮级别

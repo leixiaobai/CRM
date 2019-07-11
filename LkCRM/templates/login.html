@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}
+    登录
+{% endblock %}
+{% block body-content %}
+<h1>LLK CRM系统</h1>
+<div class="container w3layouts agileits">
+    <div class="login w3layouts agileits">
+        <h2>登 录</h2>
+        <form style="overflow: hidden">
+            {% csrf_token %}
+            <input type="text" Name="username" id="username" placeholder="用户名" required="">
+            <input type="password" Name="password" id="password" placeholder="密码" required="">
+            <input type="text" class="validcode-cls" id="validcode" Name="validcode" placeholder="验证码" required="">
+            <div class="validcode-div">
+                <img src="{% url 'get_vaildcode_img' %}" alt="验证码" class="validcode-img">
+            </div>
+        </form>
+        <ul class="tick w3layouts agileits">
+            <li class="remeber-me">
+                <input type="checkbox" id="brand1" value="">
+                <label for="brand1"><span></span>记住我</label>
+                <span id="login_error"></span>
+            </li>
+        </ul>
+        <div class="send-button w3layouts agileits">
+            <form>
+                <input id="login_in" class="btn-click" type="button" value="登 录">
+                <input id="register_in" class="btn-click" style="margin-left: 20px;" type="button" value="注 册">
+            </form>
+        </div>
+        <div class="social-icons w3layouts agileits">
+            <p>- 其他方式登录 -</p>
+            <ul>
+                <li class="qq"><a href="#"> <span class="icons w3layouts agileits"></span> <span
+                        class="text w3layouts agileits">QQ</span></a></li>
+                <li class="weixin w3ls"><a href="#"> <span class="icons w3layouts"></span> <span
+                        class="text w3layouts agileits">微信</span></a></li>
+                <li class="weibo aits"><a href="#"> <span class="icons agileits"></span> <span
+                        class="text w3layouts agileits">微博</span></a></li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="footer w3layouts agileits">
+    <p>Copyright &copy; LLK</p>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+    注册
+{% endblock %}
+{% block body-content %}
+<h1>欢迎注册LLK CRM系统</h1>
+<div class="container w3layouts agileits">
+    <div class="register w3layouts agileits">
+        <h2>注 册</h2>
+        <form style="overflow: hidden">
+            {% for field in user_form %}
+                {{ field }}<span class="pull-right"></span>
+            {% endfor %}
+        </form>
+        <div class="send-button w3layouts agileits">
+            <form>
+                <input id="reg_commit" class="btn-click" type="button" value="注册">
+                <input id="reg_back"  class="btn-click" style="margin-left: 20px;" type="button" value="返回">
+            </form>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="footer w3layouts agileits">
+    <p>Copyright &copy; LLK</p>
+</div>
+{% endblock %}
